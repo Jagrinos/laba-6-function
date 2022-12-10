@@ -1,0 +1,80 @@
+//функция ввода\вывода\расчета\только локальные\размеры по адресам в мейн\прототип 
+#include <stdio.h>
+
+void vvod(int* na, int* ma, int a[10][10]);
+void rabota(int n, int m, int a[10][10]);
+void vivod(int n, int m, int a[10][10]);
+
+void main()
+{
+	int n, m, a[10][10], i, j;
+	vvod(&n, &m,a);
+	rabota(n, m, a);
+	vivod(n, m, a);
+}
+
+void rabota(int n, int m, int a[10][10])
+{
+	int i, j, k, mn, mx;
+	int pov = 0;
+
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < m; j++)
+		{
+			k = j - 1;
+			while ((k >= 0) && (pov == 0))
+				if (a[i][j] != a[i][k])
+					k -= 1;
+				else pov = 1;
+		}
+		if (pov == 0)
+		{
+			j = 0;
+			mn = a[i][j];
+			mx = mn;
+			for (; j < m; j++)
+			{
+				if (a[i][j] < mn)
+					mn = a[i][j];
+				if (a[i][j] > mx)
+					mx = a[i][j];
+			}
+			for (j = 0; j < m; j++)
+			{
+				if (a[i][j] == mn)
+					a[i][j] = mx;
+				else if (a[i][j] == mx)
+					a[i][j] = mn;
+			}
+		}
+		pov = 0;
+	}
+}
+
+void vvod(int* na, int* ma, int a[10][10])
+{
+	int n, m, i, j;
+	printf("vvedite razmeri massiva\n");
+	scanf_s("%d%d", &n, &m);
+	*na = n;
+	*ma = m;
+	printf("vvedite massiv\n");
+	for (i = 0; i < n; i++)
+		for (j = 0; j < m; j++)
+			scanf_s("%d", &a[i][j]);
+}
+
+void vivod(int n,int m, int a[10][10])
+{
+	int i, j;
+	printf("\nresult:");
+	for (i = 0; i < n; i++)
+	{
+		printf("\n");
+		for (j = 0; j < m; j++)
+		{
+			printf("%d ", a[i][j]);
+		}
+	}
+}
